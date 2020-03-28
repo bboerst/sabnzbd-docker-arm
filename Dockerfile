@@ -1,4 +1,4 @@
-FROM arm32v7/debian:stable-slim
+FROM python:latest
 MAINTAINER Brian Boerst
 
 CMD ["bash"]
@@ -18,12 +18,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     tar xzf /tmp/sabnzbd.tar.gz && \
     mv SABnzbd-* sabnzbd && \
     chown -R sabnzbd: sabnzbd && \
+    mkdir -p /datadir && \
     apt-get -y remove --purge curl && \
     apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
 
-VOLUME [/datadir /media]
+VOLUME [/datadir]
 EXPOSE 8080
 
 WORKDIR /sabnzbd
